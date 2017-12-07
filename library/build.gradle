@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion cSdkVersion
@@ -9,9 +10,7 @@ android {
         targetSdkVersion tSdkVersion
         versionCode versionCode
         versionName versionName
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -21,6 +20,10 @@ android {
         }
     }
 
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
+    }
 }
 
 ext{
@@ -35,4 +38,14 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation "com.android.support:design:$supportVersion"
+}
+
+publish {
+    repoName = upload.repoName
+    userOrg = upload.userOrg
+    groupId = upload.groupId
+    artifactId = upload.artifactId
+    publishVersion = versionName
+    desc = upload.desc
+    website = upload.website
 }
