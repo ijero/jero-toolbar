@@ -1,7 +1,9 @@
 package cn.ijero.toolbar
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.support.transition.TransitionManager
+import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +29,7 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
     private var leftTextSize = NO_DIMEN
     private var rightTextSize = NO_DIMEN
     private var titleTextSize = NO_DIMEN
+    private var bg: Drawable? = null
 
     companion object {
         const val NO_DIMEN = -1F
@@ -73,9 +76,18 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
     }
 
     private fun loadDataForStyle() {
+        setBg()
         setTitle()
         setLeft()
         setRight()
+    }
+
+    private fun setBg() {
+        if (bg != null) {
+            background = bg
+        } else {
+            setBackgroundColor(ContextCompat.getColor(context, R.color.toolbarBackground))
+        }
     }
 
     private fun setTitle() {
@@ -148,6 +160,7 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
         leftTextSize = ta.getDimension(R.styleable.JeroToolbar_leftTextSize, leftTextSize)
         titleTextSize = ta.getDimension(R.styleable.JeroToolbar_titleTextSize, titleTextSize)
         rightTextSize = ta.getDimension(R.styleable.JeroToolbar_rightTextSize, rightTextSize)
+        bg = ta.getDrawable(R.styleable.JeroToolbar_android_background)
 
         ta.recycle()
     }

@@ -12,5 +12,6 @@
         <attr name="titleTextColor" format="color" />
         <attr name="rightTextSize" format="dimension" />
         <attr name="rightTextColor" format="color" />
+        <attr name="android:background" />
     </declare-styleable>
 </resources>
