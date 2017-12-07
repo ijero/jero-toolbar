@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="?actionBarSize"
+    android:background="@color/toolbarBackground"
+    android:id="@+id/toolbarRootLayout">
+
+    <TextView
+        android:id="@+id/toolbarLeftTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:padding="10dp"
+        android:textColor="@color/toolbarTextColor"
+        android:visibility="gone"
+        tools:text="@string/str_back" />
+
+    <ImageView
+        android:id="@+id/toolbarLeftIconImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:padding="10dp"
+        android:src="@mipmap/back" />
+
+    <TextView
+        android:padding="10dp"
+        android:id="@+id/toolbarTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/toolbarTextColor"
+        android:textSize="15sp"
+        tools:text="@string/title" />
+
+    <ImageView
+        android:id="@+id/toolbarRightIconImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:padding="10dp"
+        android:src="@mipmap/more"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/toolbarRightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:padding="10dp"
+        android:textColor="@color/toolbarTextColor"
+        android:visibility="gone"
+        tools:text="@string/str_submit" />
+
+</FrameLayout>

@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Library</string>
+    <string name="str_back">返回</string>
+    <string name="title">标题</string>
+    <string name="str_submit">提交</string>
+</resources>
