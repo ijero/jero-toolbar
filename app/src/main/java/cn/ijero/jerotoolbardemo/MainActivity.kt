@@ -3,11 +3,11 @@ package cn.ijero.jerotoolbardemo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import cn.ijero.toolbar.Toolbar
+import cn.ijero.toolbar.JeroToolbar
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), Toolbar.OnItemClickListener {
-    override fun onItemClick(view: View, itemType: Toolbar.ItemType) {
+class MainActivity : AppCompatActivity(), JeroToolbar.OnItemClickListener {
+    override fun onItemClick(view: View, itemType: JeroToolbar.ItemType) {
 
     }
 
@@ -16,6 +16,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnItemClickListener {
         setContentView(R.layout.activity_main)
 
         toolbar.listener(this)
-        toolbar.enable(Toolbar.ItemType.RIGHT_TEXT, false)
+        toolbar.enable(JeroToolbar.ItemType.RIGHT_TEXT, false)
     }
 }

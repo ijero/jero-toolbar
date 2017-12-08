@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.layout_toolbar.view.*
 /**
  * Created by Jero on 2017/12/1.
  */
-class Toolbar
+class JeroToolbar
 @JvmOverloads
 constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs), View.OnClickListener {
     private val root = LayoutInflater.from(ctx).inflate(R.layout.layout_toolbar, this, true)
@@ -29,6 +29,17 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
     private var leftTextSize = NO_DIMEN
     private var rightTextSize = NO_DIMEN
     private var titleTextSize = NO_DIMEN
+    private var isShowTitle = true
+    private var isShowLeftText = false
+    private var isShowLeftIcon = false
+    private var isShowRightText = false
+    private var isShowRightIcon = false
+    private var isTitleEnable = false
+    private var isLeftTextEnable = false
+    private var isLeftIconEnable = false
+    private var isRightTextEnable = false
+    private var isRightIconEnable = false
+
     private var bg: Drawable? = null
 
     companion object {
@@ -67,11 +78,11 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
 
     private fun setListeners() {
         root.apply {
-            toolbarTitleTextView.setOnClickListener(this@Toolbar)
-            toolbarLeftTextView.setOnClickListener(this@Toolbar)
-            toolbarRightTextView.setOnClickListener(this@Toolbar)
-            toolbarLeftIconImageView.setOnClickListener(this@Toolbar)
-            toolbarRightIconImageView.setOnClickListener(this@Toolbar)
+            toolbarTitleTextView.setOnClickListener(this@JeroToolbar)
+            toolbarLeftTextView.setOnClickListener(this@JeroToolbar)
+            toolbarRightTextView.setOnClickListener(this@JeroToolbar)
+            toolbarLeftIconImageView.setOnClickListener(this@JeroToolbar)
+            toolbarRightIconImageView.setOnClickListener(this@JeroToolbar)
         }
     }
 
@@ -92,7 +103,6 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
 
     private fun setTitle() {
         if (title != null) {
-            show(ItemType.TITLE)
             title(title)
         }
 
@@ -103,13 +113,16 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
         if (titleTextSize != NO_DIMEN) {
             titleTextSize(titleTextSize)
         }
+
+        enable(ItemType.TITLE, isTitleEnable)
+        showTitleText(isShowTitle)
     }
 
     private fun setLeft() {
         if (leftText != null) {
-            show(ItemType.LEFT_TEXT)
             leftText(leftText)
         }
+
         if (leftTextColor != NO_COLOR) {
             leftTextColor(leftTextColor)
         }
@@ -119,14 +132,17 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
         }
 
         if (leftIconId != View.NO_ID) {
-            show(ItemType.LEFT_ICON)
             leftIcon(leftIconId)
         }
+
+        showLeftText(isShowLeftText)
+        showLeftIcon(isShowLeftIcon)
+        enable(ItemType.LEFT_TEXT, isLeftTextEnable)
+        enable(ItemType.LEFT_ICON, isLeftIconEnable)
     }
 
     private fun setRight() {
         if (rightText != null) {
-            show(ItemType.RIGHT_TEXT)
             rightText(rightText)
         }
 
@@ -139,9 +155,13 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
         }
 
         if (rightIconId != View.NO_ID) {
-            show(ItemType.RIGHT_ICON)
             rightIcon(rightIconId)
         }
+
+        showRightText(isShowRightText)
+        showRightIcon(isShowRightIcon)
+        enable(ItemType.RIGHT_TEXT, isRightTextEnable)
+        enable(ItemType.RIGHT_ICON, isRightIconEnable)
     }
 
 
@@ -149,17 +169,28 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
         attrs ?: return
 
         val ta = context.obtainStyledAttributes(attrs, R.styleable.JeroToolbar)
-        title = ta.getString(R.styleable.JeroToolbar_title)
-        leftText = ta.getString(R.styleable.JeroToolbar_leftText)
-        rightText = ta.getString(R.styleable.JeroToolbar_rightText)
-        leftIconId = ta.getResourceId(R.styleable.JeroToolbar_leftIcon, View.NO_ID)
-        rightIconId = ta.getResourceId(R.styleable.JeroToolbar_rightIcon, View.NO_ID)
-        leftTextColor = ta.getColor(R.styleable.JeroToolbar_leftTextColor, leftTextColor)
-        rightTextColor = ta.getColor(R.styleable.JeroToolbar_rightTextColor, rightTextColor)
-        titleTextColor = ta.getColor(R.styleable.JeroToolbar_titleTextColor, titleTextColor)
-        leftTextSize = ta.getDimension(R.styleable.JeroToolbar_leftTextSize, leftTextSize)
-        titleTextSize = ta.getDimension(R.styleable.JeroToolbar_titleTextSize, titleTextSize)
-        rightTextSize = ta.getDimension(R.styleable.JeroToolbar_rightTextSize, rightTextSize)
+        title = ta.getString(R.styleable.JeroToolbar_jt_title)
+        leftText = ta.getString(R.styleable.JeroToolbar_jt_leftText)
+        rightText = ta.getString(R.styleable.JeroToolbar_jt_rightText)
+        leftIconId = ta.getResourceId(R.styleable.JeroToolbar_jt_leftIcon, View.NO_ID)
+        rightIconId = ta.getResourceId(R.styleable.JeroToolbar_jt_rightIcon, View.NO_ID)
+        leftTextColor = ta.getColor(R.styleable.JeroToolbar_jt_leftTextColor, leftTextColor)
+        rightTextColor = ta.getColor(R.styleable.JeroToolbar_jt_rightTextColor, rightTextColor)
+        titleTextColor = ta.getColor(R.styleable.JeroToolbar_jt_titleTextColor, titleTextColor)
+        leftTextSize = ta.getDimension(R.styleable.JeroToolbar_jt_leftTextSize, leftTextSize)
+        titleTextSize = ta.getDimension(R.styleable.JeroToolbar_jt_titleTextSize, titleTextSize)
+        rightTextSize = ta.getDimension(R.styleable.JeroToolbar_jt_rightTextSize, rightTextSize)
+        isShowTitle = ta.getBoolean(R.styleable.JeroToolbar_jt_showTitle, isShowTitle)
+        isShowLeftText = ta.getBoolean(R.styleable.JeroToolbar_jt_showLeftText, isShowLeftText)
+        isShowLeftIcon = ta.getBoolean(R.styleable.JeroToolbar_jt_showLeftIcon, isShowLeftIcon)
+        isShowRightText = ta.getBoolean(R.styleable.JeroToolbar_jt_showRightText, isShowRightText)
+        isShowRightIcon = ta.getBoolean(R.styleable.JeroToolbar_jt_showRightIcon, isShowRightIcon)
+        isTitleEnable = ta.getBoolean(R.styleable.JeroToolbar_jt_titleEnable, isTitleEnable)
+        isLeftTextEnable = ta.getBoolean(R.styleable.JeroToolbar_jt_leftTextEnable, isLeftTextEnable)
+        isLeftIconEnable = ta.getBoolean(R.styleable.JeroToolbar_jt_leftIconEnable, isLeftIconEnable)
+        isRightTextEnable = ta.getBoolean(R.styleable.JeroToolbar_jt_rightTextEnable, isRightTextEnable)
+        isRightIconEnable = ta.getBoolean(R.styleable.JeroToolbar_jt_rightIconEnable, isRightIconEnable)
+
         bg = ta.getDrawable(R.styleable.JeroToolbar_android_background)
 
         ta.recycle()
@@ -344,24 +375,24 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
         }
 
         when (itemType) {
-            Toolbar.ItemType.LEFT_ICON -> {
-                showLeftImage()
-                hideLeftText()
+            JeroToolbar.ItemType.LEFT_ICON -> {
+                showLeftIcon()
+                showLeftText(false)
             }
-            Toolbar.ItemType.RIGHT_ICON -> {
-                showRightImage()
-                hideRightText()
+            JeroToolbar.ItemType.RIGHT_ICON -> {
+                showRightIcon()
+                showRightText(false)
             }
-            Toolbar.ItemType.TITLE -> {
+            JeroToolbar.ItemType.TITLE -> {
                 showTitleText()
             }
-            Toolbar.ItemType.LEFT_TEXT -> {
+            JeroToolbar.ItemType.LEFT_TEXT -> {
                 showLeftText()
-                hideLeftImage()
+                showLeftIcon(false)
             }
-            Toolbar.ItemType.RIGHT_TEXT -> {
+            JeroToolbar.ItemType.RIGHT_TEXT -> {
                 showRightText()
-                hideRightImage()
+                showRightIcon(false)
             }
         }
         if (isAnimated) {
@@ -371,19 +402,19 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
 
     fun enable(itemType: ItemType, enable: Boolean) {
         when (itemType) {
-            Toolbar.ItemType.LEFT_ICON -> {
+            JeroToolbar.ItemType.LEFT_ICON -> {
                 leftImageView().isEnabled = enable
             }
-            Toolbar.ItemType.RIGHT_ICON -> {
+            JeroToolbar.ItemType.RIGHT_ICON -> {
                 rightImageView().isEnabled = enable
             }
-            Toolbar.ItemType.TITLE -> {
+            JeroToolbar.ItemType.TITLE -> {
                 titleTextView().isEnabled = enable
             }
-            Toolbar.ItemType.LEFT_TEXT -> {
+            JeroToolbar.ItemType.LEFT_TEXT -> {
                 leftTextView().isEnabled = enable
             }
-            Toolbar.ItemType.RIGHT_TEXT -> {
+            JeroToolbar.ItemType.RIGHT_TEXT -> {
                 rightTextView().isEnabled = enable
             }
         }
@@ -402,20 +433,20 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
             TransitionManager.beginDelayedTransition(root.toolbarRootLayout)
         }
         when (itemType) {
-            Toolbar.ItemType.LEFT_ICON -> {
-                hideLeftImage()
+            JeroToolbar.ItemType.LEFT_ICON -> {
+                showLeftIcon(false)
             }
-            Toolbar.ItemType.RIGHT_ICON -> {
-                hideRightImage()
+            JeroToolbar.ItemType.RIGHT_ICON -> {
+                showRightIcon(false)
             }
-            Toolbar.ItemType.TITLE -> {
-                hideTitleText()
+            JeroToolbar.ItemType.TITLE -> {
+                showTitleText(false)
             }
-            Toolbar.ItemType.LEFT_TEXT -> {
-                hideLeftText()
+            JeroToolbar.ItemType.LEFT_TEXT -> {
+                showLeftText(false)
             }
-            Toolbar.ItemType.RIGHT_TEXT -> {
-                hideRightText()
+            JeroToolbar.ItemType.RIGHT_TEXT -> {
+                showRightText(false)
             }
         }
         if (isAnimated) {
@@ -423,45 +454,26 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
         }
     }
 
-    private fun showLeftText() {
-        leftTextView().visibility = View.VISIBLE
+    private fun showLeftText(isShown: Boolean = true) {
+        leftTextView().visibility = if (isShown) View.VISIBLE else View.GONE
     }
 
-    private fun showRightText() {
-        rightTextView().visibility = View.VISIBLE
+    private fun showRightText(isShown: Boolean = true) {
+        rightTextView().visibility = if (isShown) View.VISIBLE else View.GONE
     }
 
-    private fun showLeftImage() {
-        leftImageView().visibility = View.VISIBLE
+    private fun showLeftIcon(isShown: Boolean = true) {
+        leftImageView().visibility = if (isShown) View.VISIBLE else View.GONE
     }
 
-    private fun showRightImage() {
-        rightImageView().visibility = View.VISIBLE
+    private fun showRightIcon(isShown: Boolean = true) {
+        rightImageView().visibility = if (isShown) View.VISIBLE else View.GONE
     }
 
-    private fun showTitleText() {
-        titleTextView().visibility = View.VISIBLE
+    private fun showTitleText(isShown: Boolean = true) {
+        titleTextView().visibility = if (isShown) View.VISIBLE else View.GONE
     }
 
-    private fun hideLeftText() {
-        leftTextView().visibility = View.GONE
-    }
-
-    private fun hideRightText() {
-        rightTextView().visibility = View.GONE
-    }
-
-    private fun hideLeftImage() {
-        leftImageView().visibility = View.GONE
-    }
-
-    private fun hideRightImage() {
-        rightImageView().visibility = View.GONE
-    }
-
-    private fun hideTitleText() {
-        titleTextView().visibility = View.GONE
-    }
 
     interface OnItemClickListener {
         fun onItemClick(view: View, itemType: ItemType)

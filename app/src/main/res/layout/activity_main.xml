@@ -6,14 +6,16 @@
     android:layout_height="match_parent"
     tools:context="cn.ijero.jerotoolbardemo.MainActivity">
 
-    <cn.ijero.toolbar.Toolbar
+    <cn.ijero.toolbar.JeroToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:leftText="返回"
-        app:rightText="完成"
-        app:title="你好啊"
-        app:titleTextColor="#FFFFFF"
-        app:titleTextSize="16dp" />
+        app:jt_leftText="返回"
+        app:jt_rightText="完成"
+        app:jt_showLeftText="true"
+        app:jt_showRightText="true"
+        app:jt_title="你好啊"
+        app:jt_titleTextColor="#FFFFFF"
+        app:jt_titleTextSize="16dp" />
 
 </FrameLayout>
