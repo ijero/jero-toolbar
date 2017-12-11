@@ -5,8 +5,8 @@
         <attr name="jt_leftText" format="string" />
         <attr name="jt_rightText" format="string" />
 
-        <attr name="jt_leftIcon" format="reference" />
-        <attr name="jt_rightIcon" format="reference" />
+        <attr name="jt_leftImage" format="reference" />
+        <attr name="jt_rightImage" format="reference" />
 
         <attr name="jt_leftTextSize" format="dimension" />
         <attr name="jt_titleTextSize" format="dimension" />
@@ -18,14 +18,14 @@
 
         <attr name="jt_showTitle" format="boolean" />
         <attr name="jt_showLeftText" format="boolean" />
-        <attr name="jt_showLeftIcon" format="boolean" />
+        <attr name="jt_showLeftImage" format="boolean" />
         <attr name="jt_showRightText" format="boolean" />
-        <attr name="jt_showRightIcon" format="boolean" />
+        <attr name="jt_showRightImage" format="boolean" />
 
         <attr name="jt_titleEnable" format="boolean" />
-        <attr name="jt_leftIconEnable" format="boolean" />
+        <attr name="jt_leftImageEnable" format="boolean" />
         <attr name="jt_leftTextEnable" format="boolean" />
-        <attr name="jt_rightIconEnable" format="boolean" />
+        <attr name="jt_rightImageEnable" format="boolean" />
         <attr name="jt_rightTextEnable" format="boolean" />
 
         <attr name="android:background" />
