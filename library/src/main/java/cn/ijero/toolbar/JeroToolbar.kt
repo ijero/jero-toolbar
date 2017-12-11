@@ -2,7 +2,10 @@ package cn.ijero.toolbar
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.support.transition.Fade
+import android.support.transition.Transition
 import android.support.transition.TransitionManager
+import android.support.transition.Visibility
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -360,9 +363,11 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
      */
     fun show(itemType: ItemType, isAnimated: Boolean = false) {
         if (isAnimated) {
-            TransitionManager.beginDelayedTransition(root.toolbarRootLayout)
+            TransitionManager.beginDelayedTransition(root.toolbarRootLayout, Fade())
         }
-
+//        else{
+//            TransitionManager.endTransitions(root.toolbarRootLayout)
+//        }
         when (itemType) {
             JeroToolbar.ItemType.LEFT_IMAGE -> {
                 showLeftImage()
@@ -383,9 +388,6 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
                 showRightText()
                 showRightImage(false)
             }
-        }
-        if (isAnimated) {
-            TransitionManager.endTransitions(root.toolbarRootLayout)
         }
     }
 
@@ -419,8 +421,11 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
      */
     fun hide(itemType: ItemType, isAnimated: Boolean = false) {
         if (isAnimated) {
-            TransitionManager.beginDelayedTransition(root.toolbarRootLayout)
+            TransitionManager.beginDelayedTransition(root.toolbarRootLayout, Fade())
         }
+//        else{
+//            TransitionManager.endTransitions(root.toolbarRootLayout)
+//        }
         when (itemType) {
             JeroToolbar.ItemType.LEFT_IMAGE -> {
                 showLeftImage(false)
@@ -437,9 +442,6 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
             JeroToolbar.ItemType.RIGHT_TEXT -> {
                 showRightText(false)
             }
-        }
-        if (isAnimated) {
-            TransitionManager.endTransitions(root.toolbarRootLayout)
         }
     }
 

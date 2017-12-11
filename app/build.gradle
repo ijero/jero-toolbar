@@ -6,6 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion cSdkVersion
+    buildToolsVersion bToolsVersion
     defaultConfig {
         applicationId "cn.ijero.jerotoolbardemo"
         minSdkVersion mSdkVersion
