@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), JeroToolbar.OnItemClickListener, RadioGroup.OnCheckedChangeListener {
     private var isAnimated = true
+
     override fun onCheckedChanged(group: RadioGroup, checkedId: Int) {
         when (group.id) {
             animatedRadioGroup.id -> {
@@ -51,6 +52,13 @@ class MainActivity : AppCompatActivity(), JeroToolbar.OnItemClickListener, Radio
                     toolbar.hide(JeroToolbar.ItemType.RIGHT_IMAGE, isAnimated)
                 }
             }
+            titleEnabledRadioGroup.id -> {
+                if (checkedId == titleEnabled.id) {
+                    toolbar.enable(JeroToolbar.ItemType.TITLE,true)
+                } else {
+                    toolbar.enable(JeroToolbar.ItemType.TITLE,false)
+                }
+            }
         }
     }
 
@@ -70,5 +78,6 @@ class MainActivity : AppCompatActivity(), JeroToolbar.OnItemClickListener, Radio
         leftImageRadioGroup.setOnCheckedChangeListener(this)
         rightTextRadioGroup.setOnCheckedChangeListener(this)
         rightImageRadioGroup.setOnCheckedChangeListener(this)
+        titleEnabledRadioGroup.setOnCheckedChangeListener(this)
     }
 }

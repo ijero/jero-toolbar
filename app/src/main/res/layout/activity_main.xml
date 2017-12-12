@@ -13,7 +13,8 @@
         app:jt_leftText="返回"
         app:jt_rightText="完成"
         app:jt_title="标题"
-        app:jt_titleTextColor="#FFFFFF"
+        app:jt_titleEnable="false"
+        app:jt_titleTextColor="@color/title_text_color"
         app:jt_titleTextSize="16dp" />
 
     <android.support.v4.widget.NestedScrollView
@@ -96,8 +97,10 @@
 
                 <RadioButton
                     android:id="@+id/leftTextHide"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="hide" />
             </RadioGroup>
 
@@ -121,8 +124,10 @@
 
                 <RadioButton
                     android:id="@+id/leftImageHide"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="hide" />
             </RadioGroup>
 
@@ -148,6 +153,7 @@
                     android:id="@+id/rightTextHide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="hide" />
             </RadioGroup>
 
@@ -173,7 +179,34 @@
                     android:id="@+id/rightImageHide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="hide" />
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/titleEnabledRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rightImageRadioGroup"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TitleEnabled : " />
+
+                <RadioButton
+                    android:id="@+id/titleEnabled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="enabled" />
+
+                <RadioButton
+                    android:id="@+id/titleDisabled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="disabled" />
             </RadioGroup>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>

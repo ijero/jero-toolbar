@@ -1,6 +1,7 @@
 package cn.ijero.toolbar
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.support.transition.Fade
 import android.support.transition.Transition
@@ -26,9 +27,9 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
     private var rightText: String? = null
     private var rightImageId = NO_ID
     private var leftImageId = NO_ID
-    private var leftTextColor = NO_COLOR
-    private var rightTextColor = NO_COLOR
-    private var titleTextColor = NO_COLOR
+    private var leftTextColor: ColorStateList? = null
+    private var rightTextColor: ColorStateList? = null
+    private var titleTextColor: ColorStateList? = null
     private var leftTextSize = NO_DIMEN
     private var rightTextSize = NO_DIMEN
     private var titleTextSize = NO_DIMEN
@@ -98,7 +99,7 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
             title(title)
         }
 
-        if (titleTextColor != NO_COLOR) {
+        if (titleTextColor != null) {
             titleTextColor(titleTextColor)
         }
 
@@ -115,7 +116,7 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
             leftText(leftText)
         }
 
-        if (leftTextColor != NO_COLOR) {
+        if (leftTextColor != null) {
             leftTextColor(leftTextColor)
         }
 
@@ -138,7 +139,7 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
             rightText(rightText)
         }
 
-        if (rightTextColor != NO_COLOR) {
+        if (rightTextColor != null) {
             rightTextColor(rightTextColor)
         }
 
@@ -166,9 +167,9 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
         rightText = ta.getString(R.styleable.JeroToolbar_jt_rightText)
         leftImageId = ta.getResourceId(R.styleable.JeroToolbar_jt_leftImage, View.NO_ID)
         rightImageId = ta.getResourceId(R.styleable.JeroToolbar_jt_rightImage, View.NO_ID)
-        leftTextColor = ta.getColor(R.styleable.JeroToolbar_jt_leftTextColor, leftTextColor)
-        rightTextColor = ta.getColor(R.styleable.JeroToolbar_jt_rightTextColor, rightTextColor)
-        titleTextColor = ta.getColor(R.styleable.JeroToolbar_jt_titleTextColor, titleTextColor)
+        leftTextColor = ta.getColorStateList(R.styleable.JeroToolbar_jt_leftTextColor)
+        rightTextColor = ta.getColorStateList(R.styleable.JeroToolbar_jt_rightTextColor)
+        titleTextColor = ta.getColorStateList(R.styleable.JeroToolbar_jt_titleTextColor)
         leftTextSize = ta.getDimension(R.styleable.JeroToolbar_jt_leftTextSize, leftTextSize)
         titleTextSize = ta.getDimension(R.styleable.JeroToolbar_jt_titleTextSize, titleTextSize)
         rightTextSize = ta.getDimension(R.styleable.JeroToolbar_jt_rightTextSize, rightTextSize)
@@ -195,7 +196,8 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
      *
      * @author Jero
      */
-    fun titleTextColor(textColor: Int) {
+    fun titleTextColor(textColor: ColorStateList?) {
+        textColor ?: return
         titleTextView().setTextColor(textColor)
     }
 
@@ -206,7 +208,8 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
      *
      * @author Jero
      */
-    fun leftTextColor(textColor: Int) {
+    fun leftTextColor(textColor: ColorStateList? = null) {
+        textColor ?: return
         leftTextView().setTextColor(textColor)
     }
 
@@ -217,7 +220,8 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
      *
      * @author Jero
      */
-    fun rightTextColor(textColor: Int) {
+    fun rightTextColor(textColor: ColorStateList?) {
+        textColor ?: return
         rightTextView().setTextColor(textColor)
     }
 
@@ -365,9 +369,6 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
         if (isAnimated) {
             TransitionManager.beginDelayedTransition(root.toolbarRootLayout, Fade())
         }
-//        else{
-//            TransitionManager.endTransitions(root.toolbarRootLayout)
-//        }
         when (itemType) {
             JeroToolbar.ItemType.LEFT_IMAGE -> {
                 showLeftImage()
@@ -423,9 +424,6 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
         if (isAnimated) {
             TransitionManager.beginDelayedTransition(root.toolbarRootLayout, Fade())
         }
-//        else{
-//            TransitionManager.endTransitions(root.toolbarRootLayout)
-//        }
         when (itemType) {
             JeroToolbar.ItemType.LEFT_IMAGE -> {
                 showLeftImage(false)
@@ -465,7 +463,11 @@ constructor(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(ctx, attrs)
         titleTextView().visibility = if (isShown) View.VISIBLE else View.GONE
     }
 
-
+    /**
+     * 条目点击监听器
+     *
+     * @author Jero
+     */
     interface OnItemClickListener {
         fun onItemClick(view: View, itemType: ItemType)
     }
